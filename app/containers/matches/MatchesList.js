@@ -11,7 +11,12 @@ import {
   loadMatchesFirstPage,
   resetMatchesListState,
 } from '../../actions/matches';
-import {ActivityIndicator, FlatList, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {useDerbyTheme} from '../../utils/theme';
 import {Col, Grid, Row} from 'react-native-easy-grid';
 import {
@@ -37,7 +42,6 @@ import DeleteMatchModal from '../../components/match/DeleteMatchModal';
 import {useDeleteMatchAlerts} from '../../hooks/useDropDownAlerts';
 import {navigate} from '../../navigation/RootNavigation';
 import MatchSubscriptions from '../../components/match/MatchSubscriptions';
-import TouchableOpacity from 'react-native-web/dist/exports/TouchableOpacity';
 import SubscribedText from '../../components/match/SubscribedText';
 
 const MatchesList = ({g, onRefresh}) => {
@@ -339,6 +343,21 @@ const MatchesList = ({g, onRefresh}) => {
                               if (value.op === 'delete') {
                                 setToDeleteItem({id: value.id});
                               }
+                              if (value.op === 'edit') {
+                                navigate('match-edit', {
+                                  id: value.id,
+                                });
+                              }
+                              if (value.op === 'score') {
+                                navigate('match-score', {
+                                  id: value.id,
+                                });
+                              }
+                              if (value.op === 'teams') {
+                                navigate('match-teams', {
+                                  id: value.id,
+                                });
+                              }
                             }}>
                             <MenuTrigger>
                               <Icon
@@ -359,9 +378,9 @@ const MatchesList = ({g, onRefresh}) => {
                                   {i18n.t('matches_screen_menu_edit')}
                                 </Text>
                               </MenuOption>
-                              <MenuOption value={{op: 'delete', id: item.id}}>
+                              <MenuOption value={{op: 'teams', id: item.id}}>
                                 <Text style={{color: colors.text}}>
-                                  {i18n.t('matches_screen_menu_delete')}
+                                  {i18n.t('matches_screen_set_teams')}
                                 </Text>
                               </MenuOption>
                               {item.status === 'to-play' && (
@@ -378,6 +397,11 @@ const MatchesList = ({g, onRefresh}) => {
                                   </Text>
                                 </MenuOption>
                               )}
+                              <MenuOption value={{op: 'delete', id: item.id}}>
+                                <Text style={{color: colors.warning}}>
+                                  {i18n.t('matches_screen_menu_delete')}
+                                </Text>
+                              </MenuOption>
                             </MenuOptions>
                           </Menu>
                         )}

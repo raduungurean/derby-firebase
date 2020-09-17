@@ -591,6 +591,62 @@ export function firebaseAddMatch(data) {
   });
 }
 
+export function firebaseEditMatch(data) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .app()
+      .functions('europe-west3')
+      .httpsCallable('app/edit-match')({
+        ...data,
+        date: data.date
+          ? firebase.firestore.Timestamp.fromDate(data.date)
+          : null,
+      })
+      .then(function (result) {
+        if (result.data.error) {
+          reject(result.data);
+        } else {
+          resolve(result.data.match);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+export function firebaseEditMatchScore(data) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .app()
+      .functions('europe-west3')
+      .httpsCallable('app/edit-match-score')(data)
+      .then(function (result) {
+        if (result.data.error) {
+          reject(result.data);
+        } else {
+          resolve(result.data.match);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+export function firebaseEditMatchTeams(data) {
+  return new Promise((resolve, reject) => {
+    firebase
+      .app()
+      .functions('europe-west3')
+      .httpsCallable('app/edit-match-teams')(data)
+      .then(function (result) {
+        if (result.data.error) {
+          reject(result.data);
+        } else {
+          resolve(result.data.match);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
 export function firebaseDeleteMatch(data) {
   return new Promise((resolve, reject) => {
     firebase

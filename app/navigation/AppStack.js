@@ -30,6 +30,9 @@ import PlayerSettingsScreen from '../screens/PlayerSettingsScreen';
 import MatchAddScreen from '../screens/MatchAddScreen';
 import MatchScreen from '../screens/MatchScreen';
 import HeaderTitle from '../components/HeaderTitle';
+import MatchEditScreen from '../screens/MatchEditScreen';
+import MatchEditScoreScreen from '../screens/MatchEditScoreScreen';
+import MatchEditTeamsScreen from '../screens/MatchEditTeamsScreen';
 
 const Stack = createStackNavigator();
 const ProfileUploadPictureStack = createStackNavigator();
@@ -279,6 +282,39 @@ function MyHomeStack() {
         }}
         name="match-add"
         component={MatchAddScreen}
+      />
+      <HomeStack.Screen
+        options={{
+          title: i18n.t('header_match_edit'),
+          headerTitleStyle: {
+            fontFamily: 'Rubik_500Medium',
+            fontSize: sizes.BASE * 1.3,
+          },
+        }}
+        name="match-edit"
+        component={MatchEditScreen}
+      />
+      <HomeStack.Screen
+        options={{
+          title: i18n.t('header_match_edit_score'),
+          headerTitleStyle: {
+            fontFamily: 'Rubik_500Medium',
+            fontSize: sizes.BASE * 1.3,
+          },
+        }}
+        name="match-score"
+        component={MatchEditScoreScreen}
+      />
+      <HomeStack.Screen
+        options={{
+          title: i18n.t('header_match_edit_teams'),
+          headerTitleStyle: {
+            fontFamily: 'Rubik_500Medium',
+            fontSize: sizes.BASE * 1.3,
+          },
+        }}
+        name="match-teams"
+        component={MatchEditTeamsScreen}
       />
       <HomeStack.Screen
         options={{

@@ -18,7 +18,7 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import FilterByGroupMessage from '../../components/FilterByGroupMessage';
-import TouchableOpacity from 'react-native-web/dist/exports/TouchableOpacity';
+import TouchableOpacity from 'react-native';
 
 const PlayersList = ({g, navigation}) => {
   const {colors, sizes} = useDerbyTheme();

@@ -3,13 +3,25 @@ import {
   ADDING_MATCH,
   CLEAR_ERROR_ADD_MATCH,
   CLEAR_ERROR_DELETE_MATCH,
+  CLEAR_ERROR_EDIT_MATCH,
+  CLEAR_ERROR_EDIT_SCORE_MATCH,
+  CLEAR_ERROR_EDIT_TEAMS_MATCH,
   CLEAR_ERROR_LOAD_MATCH,
   CLEAR_SUBSCRIBE_ERROR,
   CLEAR_UNSUBSCRIBE_ERROR,
   DELETED_MATCH,
   DELETING_MATCH,
+  EDITED_MATCH,
+  EDITED_SCORE_MATCH,
+  EDITED_TEAMS_MATCH,
+  EDITING_MATCH,
+  EDITING_SCORE_MATCH,
+  EDITING_TEAMS_MATCH,
   ERROR_ADDING_MATCH,
   ERROR_DELETING_MATCH,
+  ERROR_EDITING_MATCH,
+  ERROR_EDITING_SCORE_MATCH,
+  ERROR_EDITING_TEAMS_MATCH,
   ERROR_LOADING_MATCH,
   ERROR_LOADING_MATCHES,
   ERROR_SUBSCRIBING,
@@ -20,6 +32,9 @@ import {
   LOADING_MATCHES,
   RESET_ADD_MATCH_STATE,
   RESET_DELETE_MATCH_STATE,
+  RESET_EDIT_MATCH_STATE,
+  RESET_EDIT_SCORE_MATCH_STATE,
+  RESET_EDIT_TEAMS_MATCH_STATE,
   RESET_LOAD_MATCH_STATE,
   RESET_STATE,
   RESET_SUBSCRIBE_STATE,
@@ -44,6 +59,21 @@ const INITIAL_STATE = {
   adding: false,
   added: false,
   errorAdding: '',
+
+  // edit match
+  editing: false,
+  edited: false,
+  errorEditing: '',
+
+  // edit match teams
+  editingTeams: false,
+  editedTeams: false,
+  errorEditingTeams: '',
+
+  // edit set score
+  editingScore: false,
+  editedScore: false,
+  errorEditingScore: '',
 
   // delete match
   deleting: false,
@@ -147,6 +177,141 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         errorAdding: '',
+      };
+    }
+
+    case EDITING_MATCH: {
+      return {
+        ...state,
+        editing: action.payload,
+      };
+    }
+
+    case EDITED_MATCH: {
+      const match = action.payload;
+
+      const matches = {
+        ...state.byId,
+        [action.payload.id]: match,
+      };
+
+      return {
+        ...state,
+        edited: true,
+        byId: matches,
+      };
+    }
+
+    case ERROR_EDITING_MATCH: {
+      return {
+        ...state,
+        errorEditing: action.payload,
+      };
+    }
+
+    case RESET_EDIT_MATCH_STATE: {
+      return {
+        ...state,
+        editing: false,
+        edited: false,
+        errorEditing: '',
+      };
+    }
+
+    case CLEAR_ERROR_EDIT_MATCH: {
+      return {
+        ...state,
+        errorEditing: '',
+      };
+    }
+
+    case EDITING_SCORE_MATCH: {
+      return {
+        ...state,
+        editingScore: action.payload,
+      };
+    }
+
+    case EDITED_SCORE_MATCH: {
+      const match = action.payload;
+
+      const matches = {
+        ...state.byId,
+        [action.payload.id]: match,
+      };
+
+      return {
+        ...state,
+        editedScore: true,
+        byId: matches,
+      };
+    }
+
+    case ERROR_EDITING_SCORE_MATCH: {
+      return {
+        ...state,
+        errorEditingScore: action.payload,
+      };
+    }
+
+    case RESET_EDIT_SCORE_MATCH_STATE: {
+      return {
+        ...state,
+        editingScore: false,
+        editedScore: false,
+        errorEditingScore: '',
+      };
+    }
+
+    case CLEAR_ERROR_EDIT_SCORE_MATCH: {
+      return {
+        ...state,
+        errorEditingScore: '',
+      };
+    }
+
+    case EDITING_TEAMS_MATCH: {
+      return {
+        ...state,
+        editingTeams: action.payload,
+      };
+    }
+
+    case EDITED_TEAMS_MATCH: {
+      const match = action.payload;
+
+      const matches = {
+        ...state.byId,
+        [action.payload.id]: match,
+      };
+
+      return {
+        ...state,
+        editedTeams: true,
+        byId: matches,
+      };
+    }
+
+    case ERROR_EDITING_TEAMS_MATCH: {
+      return {
+        ...state,
+        errorEditingTeams: action.payload,
+      };
+    }
+
+    case RESET_EDIT_TEAMS_MATCH_STATE: {
+      return {
+        ...state,
+        editingTeams: false,
+        editedTeams: false,
+        errorEditingTeams: '',
+      };
+    }
+
+    case CLEAR_ERROR_EDIT_TEAMS_MATCH: {
+      return {
+        ...state,
+        errorEditingTeams: '',
       };
     }
 

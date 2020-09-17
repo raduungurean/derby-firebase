@@ -1,51 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useDerbyTheme} from '../../utils/theme';
 import {Button, Text} from 'react-native-elements';
 import {ScrollView, StyleSheet} from 'react-native';
-import {useDerbyTheme} from '../../utils/theme';
-import i18n from 'i18n-js';
+import {useFocusEffect} from '@react-navigation/core';
+import {editMatch, loadMatch} from '../../actions/matches';
 import {useDispatch, useSelector} from 'react-redux';
+import SpinLoader from '../../components/SpinLoader';
 import {minutesData, playersData} from '../../utils/config';
-import MyDropDownPicker from '../../components/MyDropDownPicker';
-import {LinearGradient} from 'expo-linear-gradient';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import DateField from '../../components/DateField';
-import {addMatch} from '../../actions/matches';
-import {useAddMatchAlerts} from '../../hooks/useDropDownAlerts';
 import {useLocations} from '../../hooks/useLocations';
 import {useGroups} from '../../hooks/useGroups';
+import i18n from 'i18n-js';
+import MyDropDownPicker from '../../components/MyDropDownPicker';
+import {LinearGradient} from 'expo-linear-gradient';
+import DateField from '../../components/DateField';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {fromFirebaseDate} from '../../services/firebase-utils';
+import {useEditMatchAlerts} from '../../hooks/useDropDownAlerts';
 
-const MatchAddForm = () => {
+const MatchEditForm = ({matchId}) => {
   const {dark, sizes, colors} = useDerbyTheme();
   const dispatch = useDispatch();
   const matches = useSelector((state) => state.matches);
-  const {adding} = matches;
+  const [match, setMatch] = useState(null);
+  const {editing} = matches;
+  const locationsData = useLocations();
+  const groupsData = useGroups();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isValid, setIsFormValid] = useState(false);
 
   const [date, setDate] = useState(undefined);
   const [group, setGroup] = useState(undefined);
   const [noPlayers, setNoPlayers] = useState(10);
   const [duration, setDuration] = useState(60);
   const [location, setLocation] = useState(undefined);
-
-  const locationsData = useLocations();
-  const groupsData = useGroups();
-
-  useAddMatchAlerts(() => {
-    setDate(undefined);
-    setGroup(undefined);
-    setNoPlayers(10);
-    setDuration(10);
-    setLocation(undefined);
-  });
-
-  useEffect(() => {
-    if (date && group && noPlayers && duration && location) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
-  }, [date, group, noPlayers, duration, location]);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -59,6 +45,24 @@ const MatchAddForm = () => {
     setDate(date);
     hideDatePicker();
   };
+
+  // TODO reset form values after showing error alert
+  useEditMatchAlerts();
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(loadMatch(matchId));
+    }, [matchId]),
+  );
+
+  useEffect(() => {
+    const p = matches.byId[matchId];
+    setMatch(p);
+  }, [matches, matchId]);
+
+  if (!match) {
+    return <SpinLoader />;
+  }
 
   return (
     <ScrollView
@@ -83,12 +87,13 @@ const MatchAddForm = () => {
             color: colors.text,
           },
         ]}>
-        {i18n.t('match_add_form_title')}
+        {i18n.t('match_edit_form_title')}
       </Text>
 
       {groupsData.length > 0 && (
         <MyDropDownPicker
           zIndex={4000}
+          defaultValue={match.group_id}
           placeholder={i18n.t('match_add_select_group_label')}
           label={i18n.t('match_add_group_name_label')}
           items={groupsData}
@@ -101,6 +106,7 @@ const MatchAddForm = () => {
       {locationsData.length > 0 && (
         <MyDropDownPicker
           zIndex={3000}
+          defaultValue={match.location_id}
           placeholder={i18n.t('match_add_select_location_label')}
           label={i18n.t('match_add_location_label')}
           items={locationsData}
@@ -112,7 +118,7 @@ const MatchAddForm = () => {
 
       {playersData.length > 0 && (
         <MyDropDownPicker
-          defaultValue={10}
+          defaultValue={match.capacity}
           zIndex={2000}
           label={i18n.t('match_add_players_label')}
           items={playersData}
@@ -121,10 +127,11 @@ const MatchAddForm = () => {
           }}
         />
       )}
+
       {minutesData.length > 0 && (
         <MyDropDownPicker
           zIndex={1000}
-          defaultValue={60}
+          defaultValue={match.duration}
           label={i18n.t('match_add_minutes_label')}
           items={minutesData}
           onChangeItem={(item) => {
@@ -134,14 +141,20 @@ const MatchAddForm = () => {
       )}
 
       <DateField
-        date={date}
+        date={
+          date
+            ? date
+            : match.date
+            ? fromFirebaseDate(match.date).toDate()
+            : null
+        }
         onSetDate={(dt) => setDate(dt)}
         onPress={showDatePicker}
       />
 
       <Button
-        loading={adding}
-        title={i18n.t('match_add_button_label')}
+        loading={editing}
+        title={i18n.t('match_edit_button_label')}
         containerStyle={{marginTop: sizes.BASE}}
         buttonStyle={styles.submitButton}
         linearGradientProps={{
@@ -160,10 +173,18 @@ const MatchAddForm = () => {
         disabledTitleStyle={{
           color: colors.textMuted,
         }}
-        onPress={() =>
-          dispatch(addMatch({date, location, duration, noPlayers, group}))
-        }
-        disabled={!isValid}
+        onPress={() => {
+          dispatch(
+            editMatch({
+              date,
+              location,
+              duration,
+              noPlayers,
+              group,
+              id: match.id,
+            }),
+          );
+        }}
       />
     </ScrollView>
   );
@@ -187,4 +208,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MatchAddForm;
+export default MatchEditForm;

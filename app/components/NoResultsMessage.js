@@ -16,6 +16,7 @@ export default function NoResultsMessage({message}) {
       marginVertical: sizes.BASE / 1.5,
       borderWidth: 0,
       borderRadius: 5,
+      width: '100%',
     },
   ];
 

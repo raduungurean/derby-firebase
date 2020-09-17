@@ -61,6 +61,9 @@ const AppWrapper = ({refreshing, onRefresh, navigation, children}) => {
         'player',
         'match',
         'match-add',
+        'match-edit',
+        'match-teams',
+        'match-score',
         'player-settings',
       ].includes(route.name)
     ) {

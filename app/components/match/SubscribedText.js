@@ -5,18 +5,14 @@ import {useDerbyTheme} from '../../utils/theme';
 import {StyleSheet} from 'react-native';
 
 const SubscribedText = () => {
-  const {colors, sizes, dark} = useDerbyTheme();
+  const {colors, sizes} = useDerbyTheme();
   return (
     <Button
-      disabled={true}
-      disabledTitleStyle={{color: colors.text}}
-      disabledStyle={{borderColor: colors.success}}
       buttonStyle={styles.submitButtonFull}
-      onPress={() => {}}
       icon={
         <Icon
-          type="entypo"
-          name="thumbs-up"
+          type="octicon"
+          name="thumbsup"
           style={{marginRight: sizes.BASE / 2}}
           size={15}
           color={colors.success}
@@ -26,7 +22,7 @@ const SubscribedText = () => {
       titleStyle={[
         styles.submitButtonText,
         {
-          color: dark ? colors.white : colors.backgroundCard,
+          color: colors.success,
           fontSize: sizes.BASE * 0.75,
         },
       ]}
@@ -38,9 +34,10 @@ const SubscribedText = () => {
 const styles = StyleSheet.create({
   submitButtonFull: {
     width: 235,
-    borderRadius: Math.round(45 / 2),
-    height: 35,
+    borderWidth: 0,
+    height: 20,
     marginRight: 1,
+    paddingVertical: 0,
   },
 });
 

@@ -4,6 +4,7 @@ import {Button, Icon, Text} from 'react-native-elements';
 import i18n from 'i18n-js';
 import {useDerbyTheme} from '../../utils/theme';
 import {StyleSheet} from 'react-native';
+import {sortByTeam} from '../../utils/helpers';
 
 const MatchSubscriptions = ({subscriptions}) => {
   const {sizes, colors} = useDerbyTheme();
@@ -32,76 +33,60 @@ const MatchSubscriptions = ({subscriptions}) => {
         </Col>
       </Row>
       <Row style={{flexWrap: 'wrap'}}>
-        {subscriptions
-          .sort((a, b) => {
-            if (a.team === b.team) {
-              return 0;
-            }
-            if (a.team === 'red' && b.team === 'blue') {
-              return -1;
-            }
-            if (a.team === 'red' && b.team === 'none') {
-              return -1;
-            }
-            if (a.team === 'blue' && b.team === 'none') {
-              return -1;
-            }
-            return 1;
-          })
-          .map((subs) => {
-            return (
-              <Button
-                containerStyle={{
-                  marginTop: sizes.BASE * 0.4,
-                  marginRight: sizes.BASE * 0.4,
-                }}
-                disabled={true}
-                disabledStyle={{backgroundColor: colors.backgroundCard}}
-                disabledTitleStyle={[
-                  styles.submitButtonText,
-                  {
-                    color: colors.text,
-                    fontSize: sizes.BASE * 0.7,
-                  },
-                ]}
-                titleStyle={[
-                  styles.submitButtonText,
-                  {
-                    color: colors.text,
-                    fontSize: sizes.BASE * 0.7,
-                  },
-                ]}
-                buttonStyle={[
-                  styles.submitButtonNoWidth,
-                  {
-                    paddingHorizontal: sizes.BASE,
-                    paddingVertical: sizes.BASE / 4,
-                    borderWidth: 2,
-                    borderColor: colors.joy2,
-                  },
-                ]}
-                icon={
-                  <Icon
-                    size={sizes.BASE}
-                    name={
-                      subs.subscription === 'playing' ? 'caretup' : 'caretdown'
-                    }
-                    type="antdesign"
-                    color={
-                      subs.subscription === 'playing'
-                        ? colors.joy2
-                        : subs.subscription === 'not-playing'
-                        ? colors.error
-                        : colors.textMuted
-                    }
-                    style={{marginRight: sizes.BASE / 2}}
-                  />
-                }
-                title={subs.first_name + ' ' + subs.last_name}
-                key={subs.first_name + ' ' + subs.last_name}
-              />
-            );
-          })}
+        {subscriptions.sort(sortByTeam).map((subs) => {
+          return (
+            <Button
+              containerStyle={{
+                marginTop: sizes.BASE * 0.4,
+                marginRight: sizes.BASE * 0.4,
+              }}
+              disabled={true}
+              disabledStyle={{backgroundColor: colors.backgroundCard}}
+              disabledTitleStyle={[
+                styles.submitButtonText,
+                {
+                  color: colors.text,
+                  fontSize: sizes.BASE * 0.7,
+                },
+              ]}
+              titleStyle={[
+                styles.submitButtonText,
+                {
+                  color: colors.text,
+                  fontSize: sizes.BASE * 0.7,
+                },
+              ]}
+              buttonStyle={[
+                styles.submitButtonNoWidth,
+                {
+                  paddingHorizontal: sizes.BASE,
+                  paddingVertical: sizes.BASE / 4,
+                  borderWidth: 2,
+                  borderColor: colors.joy2,
+                },
+              ]}
+              icon={
+                <Icon
+                  size={sizes.BASE}
+                  name={
+                    subs.subscription === 'playing' ? 'caretup' : 'caretdown'
+                  }
+                  type="antdesign"
+                  color={
+                    subs.subscription === 'playing'
+                      ? colors.joy2
+                      : subs.subscription === 'not-playing'
+                      ? colors.error
+                      : colors.textMuted
+                  }
+                  style={{marginRight: sizes.BASE / 2}}
+                />
+              }
+              title={subs.first_name + ' ' + subs.last_name}
+              key={subs.first_name + ' ' + subs.last_name}
+            />
+          );
+        })}
       </Row>
     </>
   );

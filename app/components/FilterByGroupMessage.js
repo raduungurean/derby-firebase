@@ -1,15 +1,14 @@
 import {LinearGradient} from 'expo-linear-gradient';
-import {Button, Text} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useDerbyTheme} from '../utils/theme';
-import i18n from 'i18n-js';
 import {useDispatch} from 'react-redux';
 import {toggleGroupSelector} from '../actions/layout';
 
 export default function FilterByGroupMessage({message, buttonText}) {
-  const {colors, sizes, dark} = useDerbyTheme();
+  const {sizes} = useDerbyTheme();
   const dispatch = useDispatch();
   const linearGradientStyles = [
     styles.linearGradient,
@@ -17,28 +16,6 @@ export default function FilterByGroupMessage({message, buttonText}) {
       marginHorizontal: sizes.BASE - 6,
       paddingHorizontal: sizes.BASE / 2,
       paddingVertical: sizes.BASE / 3,
-    },
-  ];
-  const resendButtonStyles = [
-    styles.resendButtonStyle,
-    {
-      paddingVertical: sizes.BASE / 6,
-      paddingHorizontal: sizes.BASE / 2,
-    },
-  ];
-  const resendButtonContainerStyles = [
-    styles.resendButtonContainerStyle,
-    {
-      marginRight: sizes.BASE / 2,
-      marginTop: sizes.BASE / 2,
-    },
-  ];
-  const resendButtonTitleStyles = [
-    styles.resendButtonTitleStyle,
-    {
-      fontSize: sizes.BASE - 4,
-      fontFamily: 'Rubik_400Regular',
-      color: dark ? '#fff' : colors.backgroundCard,
     },
   ];
   return (

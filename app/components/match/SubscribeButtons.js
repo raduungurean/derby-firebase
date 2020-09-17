@@ -61,7 +61,7 @@ export default function SubscribeButtons({
             styles.submitButtonText,
             {
               color: dark ? colors.white : colors.backgroundCard,
-              fontSize: sizes.BASE * 0.65,
+              fontSize: sizes.BASE * 0.7,
             },
           ]}
           title={i18n.t('matches_screen_ill_be_there')}
@@ -100,7 +100,7 @@ export default function SubscribeButtons({
               styles.submitButtonText,
               {
                 color: dark ? colors.white : colors.backgroundCard,
-                fontSize: sizes.BASE * 0.65,
+                fontSize: sizes.BASE * 0.7,
               },
             ]}
             title={i18n.t('matches_screen_not_this_time')}

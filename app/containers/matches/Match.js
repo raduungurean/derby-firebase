@@ -52,7 +52,7 @@ const Match = ({id}) => {
   useEffect(() => {
     const p = matches.byId[id];
     setMatch(p);
-  }, [matches]);
+  }, [matches, id]);
 
   useEffect(() => {
     const matchQuery = firebaseMatchIdQuery(id);
@@ -307,7 +307,7 @@ const Match = ({id}) => {
                 {!locked && !matchInProgress && !matchPassed && (
                   <Row
                     style={{
-                      marginTop: sizes.BASE / 2,
+                      marginTop: 0,
                       paddingTop: sizes.BASE / 2,
                     }}>
                     <SubscribeButtons

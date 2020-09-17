@@ -3,13 +3,25 @@ import {
   ADDING_MATCH,
   CLEAR_ERROR_ADD_MATCH,
   CLEAR_ERROR_DELETE_MATCH,
+  CLEAR_ERROR_EDIT_MATCH,
+  CLEAR_ERROR_EDIT_SCORE_MATCH,
+  CLEAR_ERROR_EDIT_TEAMS_MATCH,
   CLEAR_ERROR_LOAD_MATCH,
   CLEAR_SUBSCRIBE_ERROR,
   CLEAR_UNSUBSCRIBE_ERROR,
   DELETED_MATCH,
   DELETING_MATCH,
+  EDITED_MATCH,
+  EDITED_SCORE_MATCH,
+  EDITED_TEAMS_MATCH,
+  EDITING_MATCH,
+  EDITING_SCORE_MATCH,
+  EDITING_TEAMS_MATCH,
   ERROR_ADDING_MATCH,
   ERROR_DELETING_MATCH,
+  ERROR_EDITING_MATCH,
+  ERROR_EDITING_SCORE_MATCH,
+  ERROR_EDITING_TEAMS_MATCH,
   ERROR_LOADING_MATCH,
   ERROR_LOADING_MATCHES,
   ERROR_SUBSCRIBING,
@@ -20,6 +32,9 @@ import {
   LOADING_MATCHES,
   RESET_ADD_MATCH_STATE,
   RESET_DELETE_MATCH_STATE,
+  RESET_EDIT_MATCH_STATE,
+  RESET_EDIT_SCORE_MATCH_STATE,
+  RESET_EDIT_TEAMS_MATCH_STATE,
   RESET_LOAD_MATCH_STATE,
   RESET_STATE,
   RESET_SUBSCRIBE_STATE,
@@ -32,6 +47,9 @@ import {
 import {
   firebaseAddMatch,
   firebaseDeleteMatch,
+  firebaseEditMatch,
+  firebaseEditMatchScore,
+  firebaseEditMatchTeams,
   firebaseGetMatches,
   firebaseLoadMatch,
   firebaseSubscribeToMatch,
@@ -163,6 +181,150 @@ export const addMatch = (data) => async (dispatch) => {
     })
     .finally(() => {
       dispatch(addingMatch(false));
+    });
+};
+
+export const editingMatch = (editing) => ({
+  type: EDITING_MATCH,
+  payload: editing,
+});
+
+export const editedMatch = (matchData) => ({
+  type: EDITED_MATCH,
+  payload: matchData,
+});
+
+export const errorEditingMatch = (msg) => ({
+  type: ERROR_EDITING_MATCH,
+  payload: msg,
+});
+
+export const clearErrorEditMatch = () => ({
+  type: CLEAR_ERROR_EDIT_MATCH,
+});
+
+export const resetEditMatchState = () => ({
+  type: RESET_EDIT_MATCH_STATE,
+});
+
+export const editMatch = (data) => async (dispatch) => {
+  dispatch(editingMatch(true));
+  firebaseEditMatch(data)
+    .then(async (res) => {
+      try {
+        await dispatch(editedMatch(res));
+        // TODO, add g= in URL maybe?
+        await navigate('home');
+        // TODO, if is already a group selected
+        // switch to the new group
+        // if is not, leave it like that
+        // now I always switch to all-groups
+        await dispatch(setSelectedGroupGlobally(null));
+      } catch (e) {
+        console.log('### error adding', e);
+      }
+    })
+    .catch((err) => {
+      dispatch(errorEditingMatch('error editing match'));
+    })
+    .finally(() => {
+      dispatch(editingMatch(false));
+    });
+};
+
+export const editingMatchTeams = (editing) => ({
+  type: EDITING_TEAMS_MATCH,
+  payload: editing,
+});
+
+export const editedMatchTeams = (matchData) => ({
+  type: EDITED_TEAMS_MATCH,
+  payload: matchData,
+});
+
+export const errorEditingMatchTeams = (msg) => ({
+  type: ERROR_EDITING_TEAMS_MATCH,
+  payload: msg,
+});
+
+export const clearErrorEditMatchTeams = () => ({
+  type: CLEAR_ERROR_EDIT_TEAMS_MATCH,
+});
+
+export const resetEditMatchTeamsState = () => ({
+  type: RESET_EDIT_TEAMS_MATCH_STATE,
+});
+
+export const editMatchTeams = (data) => async (dispatch) => {
+  dispatch(editingMatchTeams(true));
+  firebaseEditMatchTeams(data)
+    .then(async (res) => {
+      try {
+        await dispatch(editedMatchTeams(res));
+        // TODO, add g= in URL maybe?
+        await navigate('home');
+        // TODO, if is already a group selected
+        // switch to the new group
+        // if is not, leave it like that
+        // now I always switch to all-groups
+        await dispatch(setSelectedGroupGlobally(null));
+      } catch (e) {
+        console.log('### error adding', e);
+      }
+    })
+    .catch((err) => {
+      dispatch(errorEditingMatchTeams('error editing match'));
+    })
+    .finally(() => {
+      dispatch(editingMatchTeams(false));
+    });
+};
+
+export const editingMatchScore = (editing) => ({
+  type: EDITING_SCORE_MATCH,
+  payload: editing,
+});
+
+export const editedMatchScore = (matchData) => ({
+  type: EDITED_SCORE_MATCH,
+  payload: matchData,
+});
+
+export const errorEditingMatchScore = (msg) => ({
+  type: ERROR_EDITING_SCORE_MATCH,
+  payload: msg,
+});
+
+export const clearErrorEditMatchScore = () => ({
+  type: CLEAR_ERROR_EDIT_SCORE_MATCH,
+});
+
+export const resetEditMatchScoreState = () => ({
+  type: RESET_EDIT_SCORE_MATCH_STATE,
+});
+
+export const editMatchScore = (data) => async (dispatch) => {
+  dispatch(editingMatchScore(true));
+  firebaseEditMatchScore(data)
+    .then(async (res) => {
+      try {
+        await dispatch(editedMatchScore(res));
+        // TODO, add g= in URL maybe?
+        await navigate('home');
+        // TODO, if is already a group selected
+        // switch to the new group
+        // if is not, leave it like that
+        // now I always switch to all-groups
+        await dispatch(setSelectedGroupGlobally(null));
+      } catch (e) {
+        console.log('### error adding', e);
+      }
+    })
+    .catch((err) => {
+      dispatch(errorEditingMatchScore('error editing match'));
+    })
+    .finally(() => {
+      dispatch(editingMatchScore(false));
     });
 };
 

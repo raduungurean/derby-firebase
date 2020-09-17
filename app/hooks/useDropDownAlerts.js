@@ -268,6 +268,57 @@ export function useUpdateProfileAlerts() {
   }, [errorUpdatingProfile]);
 }
 
+export function useEditMatchAlerts() {
+  const matches = useSelector((state) => state.matches);
+  const {errorEditing} = matches;
+  useEffect(() => {
+    if (errorEditing) {
+      ddRef
+        .getDdRef()
+        .alertWithType(
+          'error',
+          i18n.t('match_edit_err_alert_subject'),
+          i18n.t('match_edit_err_alert_description'),
+          {type: 'ERROR_ED_M'},
+        );
+    }
+  }, [errorEditing]);
+}
+
+export function useEditMatchScoreAlerts() {
+  const matches = useSelector((state) => state.matches);
+  const {errorEditingScore} = matches;
+  useEffect(() => {
+    if (errorEditingScore) {
+      ddRef
+        .getDdRef()
+        .alertWithType(
+          'error',
+          i18n.t('match_edit_score_err_alert_subject'),
+          i18n.t('match_edit_score_err_alert_description'),
+          {type: 'ERROR_ED_MS'},
+        );
+    }
+  }, [errorEditingScore]);
+}
+
+export function useEditMatchTeamsAlerts() {
+  const matches = useSelector((state) => state.matches);
+  const {errorEditingTeams} = matches;
+  useEffect(() => {
+    if (errorEditingTeams) {
+      ddRef
+        .getDdRef()
+        .alertWithType(
+          'error',
+          i18n.t('match_edit_teams_err_alert_subject'),
+          i18n.t('match_edit_teams_err_alert_description'),
+          {type: 'ERROR_ED_MT'},
+        );
+    }
+  }, [errorEditingTeams]);
+}
+
 export function useSubscribeAlerts() {
   const matches = useSelector((state) => state.matches);
   const {errorSubscribing} = matches;

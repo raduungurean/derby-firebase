@@ -71,3 +71,19 @@ export const isEmptyObject = (obj) =>
 export function addMinutes(date, minutes) {
   return new Date(date.getTime() + minutes * 60000);
 }
+
+export function sortByTeam(a, b) {
+  if (a.team === b.team) {
+    return 0;
+  }
+  if (a.team === 'red' && b.team === 'blue') {
+    return -1;
+  }
+  if (a.team === 'red' && b.team === 'none') {
+    return -1;
+  }
+  if (a.team === 'blue' && b.team === 'none') {
+    return -1;
+  }
+  return 1;
+}

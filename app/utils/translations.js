@@ -92,6 +92,9 @@ const ro = {
   header_players: 'Lista jucatori',
   header_player_settings: 'Setari jucator',
   header_match_add: 'Derby.Today',
+  header_match_edit: 'Derby.Today',
+  header_match_edit_teams: 'Derby.Today',
+  header_match_edit_score: 'Derby.Today',
   header_match: 'Derby.Today',
 
   // player settings screen
@@ -152,11 +155,12 @@ const ro = {
   matches_screen_created_by: 'Creat de:',
   matches_screen_label_upcoming: 'Upcoming',
   matches_screen_label_canceled: 'Anulat',
-  matches_screen_ill_be_there: 'Voi participa',
-  matches_screen_menu_edit: 'Modifica informatiile',
+  matches_screen_ill_be_there: 'Vin si eu',
+  matches_screen_menu_edit: 'Modifica',
   matches_screen_menu_delete: 'Sterge meciul',
   matches_screen_not_this_time: 'Nu pot sa ajung',
   matches_screen_set_score: 'Adauga scorul',
+  matches_screen_set_teams: 'Formeaza echipele',
   matches_screen_change_score: 'Modifica scorul',
   matches_screen_confirmations_locked: 'Confirmarile sunt blocate',
   match_screen_playing_now: 'Se joaca acum',
@@ -348,6 +352,14 @@ const ro = {
   match_add_err_alert_description: 'Te rugam sa incerci mai tarziu',
   match_add_success_alert_subject: 'Succes',
   match_add_success_alert_description: 'Meciul a fost adaugat.',
+
+  // match edit screen
+  match_edit_form_title: 'Modifica detaliile meciului',
+  match_edit_score_form_title: 'Modifica scorul',
+  match_edit_teams_form_title: 'Formeaza echipele',
+  match_edit_button_label: 'Modifica',
+  match_edit_score_teams_not_set:
+    'Nu se poate adauga scorul. Mai intai formeaza echipele.',
 };
 
 const en = {
@@ -402,6 +414,9 @@ const en = {
   header_players: 'Players List',
   header_player_settings: 'Player Settings',
   header_match_add: 'Derby.Today',
+  header_match_edit: 'Derby.Today',
+  header_match_edit_teams: 'Derby.Today',
+  header_match_edit_score: 'Derby.Today',
   header_match: 'Derby.Today',
 
   // player settings screen
@@ -473,6 +488,7 @@ const en = {
   matches_screen_menu_edit: 'Edit match info',
   matches_screen_menu_delete: 'Delete match',
   matches_screen_set_score: 'Set match score',
+  matches_screen_set_teams: 'Set the teams',
   matches_screen_change_score: 'Edit match score',
   matches_screen_confirmations_locked: 'Confirmations Locked',
   match_screen_playing_now: 'Playing now',
@@ -651,6 +667,14 @@ const en = {
   match_add_err_alert_description: 'Please try again later',
   match_add_success_alert_subject: 'Success',
   match_add_success_alert_description: 'The match has been added.',
+
+  // match edit screen
+  match_edit_form_title: 'Update match info',
+  match_edit_score_form_title: 'Update score',
+  match_edit_teams_form_title: 'Set the teams',
+  match_edit_button_label: 'Edit',
+  match_edit_score_teams_not_set:
+    'Can not add the score. Please set the teams first.',
 };
 
 i18n.translations = {

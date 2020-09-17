@@ -43,6 +43,9 @@ import {
 import {
   clearErrorAddMatch,
   clearErrorDeleteMatch,
+  clearErrorEditMatch,
+  clearErrorEditMatchScore,
+  clearErrorEditMatchTeams,
   clearErrorSubscribeMatch,
   clearErrorUnsubscribeMatch,
   resetAddMatchState,
@@ -157,6 +160,15 @@ const MyDropDownAlert = () => {
         }
         if (alertType.payload.type === 'ERROR_UNSUB') {
           dispatch(clearErrorUnsubscribeMatch());
+        }
+        if (alertType.payload.type === 'ERROR_ED_M') {
+          dispatch(clearErrorEditMatch());
+        }
+        if (alertType.payload.type === 'ERROR_ED_MS') {
+          dispatch(clearErrorEditMatchScore());
+        }
+        if (alertType.payload.type === 'ERROR_ED_MT') {
+          dispatch(clearErrorEditMatchTeams());
         }
       }}
       ref={(ref) => {
